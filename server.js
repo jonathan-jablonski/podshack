@@ -3,10 +3,18 @@ const express = require("express");
 // const session = require("express-session");
 const exphbs = require("express-handlebars");
 const routes = require("./controllers");
+<<<<<<< Updated upstream
 // const helpers = require("./utils/helpers");
 
 // const sequelize = require("./config/connection");
 // const SequelizeStore = require("connect-session-sequelize")(session.Store);
+=======
+const helpers = require("./utils/helpers");
+const dotenv = require("dotenv");
+
+const sequelize = require("./config/connection");
+//const SequelizeStore = require("connect-session-sequelize")(session.Store);
+>>>>>>> Stashed changes
 
 const app = express();
 const PORT = process.env.PORT || 3001;
