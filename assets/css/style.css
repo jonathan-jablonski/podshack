@@ -41,7 +41,7 @@
     padding-bottom: 50px;
 
 }
-.form {
+.form-group {
     /*color: #5e43be;*/
     font-size: 2.5em;
     margin-left: 0 auto;
@@ -66,8 +66,8 @@
 #btn {
     margin-top: 20px;
 }
-/* Styles for submit button */
-#submit-btn {
+/* Styles for shackme button */
+#shackme-btn {
     background-color: #7057c9;
     font-size: 20px;
     padding: 14px 40px;
