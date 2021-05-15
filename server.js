@@ -4,14 +4,9 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const routes = require("./controllers");
 const helpers = require("./utils/helpers");
-<<<<<<< Updated upstream
 const dotenv = require("dotenv");
-
-=======
 const passport = require("passport");
->>>>>>> Stashed changes
 const sequelize = require("./config/connection");
-
 //const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const app = express();
@@ -31,10 +26,9 @@ const hbs = exphbs.create({ helpers });
 // };
 
 // app.use(session(sess));
-<<<<<<< Updated upstream
+
 
 // Inform Express.js on which template engine to use
-=======
 //May not need these, only for setup
 passport.serializeUser(function(user, cb) {
     cb(null, user);
@@ -44,10 +38,8 @@ passport.serializeUser(function(user, cb) {
     cb(null, obj);
   });
 
->>>>>>> Stashed changes
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -55,10 +47,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(routes);
 
-<<<<<<< Updated upstream
-// sequelize.sync({ force: false }).then(() => {
-=======
 sequelize.sync({ force: true }).then(() => {
->>>>>>> Stashed changes
 app.listen(PORT, () => console.log("Now listening"));
-// });
+});

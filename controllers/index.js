@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 const router = require("express").Router();
 
 const homeRoutes = require("./homeRoutes");
@@ -12,4 +10,3 @@ router.use ('/auth', authRoutes);
 
 
 module.exports = router;
->>>>>>> Stashed changes
