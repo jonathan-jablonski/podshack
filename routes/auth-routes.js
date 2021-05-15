@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const passport = require('passport');
-const { User } = require('../model/users.js');
+const User = require('../model/users.js');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
 //login for users already created locally
 router.post('/login', async (req, res) => {
     try {
@@ -49,7 +50,7 @@ router.post('/logout', (req, res) => {
 
 // auth with google+
 router.get('/google', passport.authenticate('google', {
-    scope: ['profile']
+    scope: ['profile', 'email', 'openid']
 }));
 
 router.get('/create', (req,res) => {
@@ -57,7 +58,7 @@ router.get('/create', (req,res) => {
 });
 // callback route for google to redirect to
 // hand control to passport to use code to grab profile info
-router.get('/auth/google/redirect', passport.authenticate('google'), (req, res) => {
+router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
     res.send('you reached the redirect URI');
 });
 
@@ -68,10 +69,17 @@ passport.use(
         // options for google strategy
         clientID: "746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com",
         clientSecret: "AJa2qzeHWvd68gTav5l4udT3",
-        callbackURL: '/auth/google/redirect'
+        callbackURL: 'http://localhost:3001/auth/google/redirect'
     }, (accessToken, refreshToken, profile, done) => {
         // passport callback function
         console.log('profile', profile)
-    })
-);
+        User.create({email:profile.emails[0].value, name:profile.displayName, password:"Test1" }, function(err, user) {
+        console.log('user', user )  
+          if (err) { return done(err); }
+          done(null, user);
+        });
+      },
+    ));
+
+
 module.exports = router;
