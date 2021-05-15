@@ -17,8 +17,7 @@ User.init({
         type:DataTypes.STRING,
         allowNull: false,
         validate: {
-            len: [8,16],
-            isAlphanumeric: true,
+            len: [8,20],
             notContains: "password",
             isLowercase: true,
             isUppercase: true,
