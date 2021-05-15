@@ -57,7 +57,7 @@ router.get('/create', (req,res) => {
 });
 // callback route for google to redirect to
 // hand control to passport to use code to grab profile info
-router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+router.get('/auth/google/redirect', passport.authenticate('google'), (req, res) => {
     res.send('you reached the redirect URI');
 });
 
@@ -66,11 +66,12 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
 passport.use(
     new GoogleStrategy({
         // options for google strategy
-        clientID: //key,
-        clientSecret: //secret,
+        clientID: "746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com",
+        clientSecret: "AJa2qzeHWvd68gTav5l4udT3",
         callbackURL: '/auth/google/redirect'
     }, (accessToken, refreshToken, profile, done) => {
         // passport callback function
+        console.log('profile', profile)
         console.log('passport callback function fired:');
     })
 );
