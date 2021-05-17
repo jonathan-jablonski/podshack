@@ -36,3 +36,5 @@ User.init({
     await sequelize.sync({ force: true });
     // Code here
   })();
+
+module.exports = User;
