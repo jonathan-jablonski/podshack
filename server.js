@@ -1,7 +1,8 @@
 const path = require("path");
 const express = require("express");
-const session = require("express-session");
+// const session = require("express-session");
 const exphbs = require("express-handlebars");
+//const hbs = require("handlebars");
 const routes = require("./controllers");
 const helpers = require("./utils/helpers");
 const dotenv = require("dotenv");
@@ -13,7 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Set up Handlebars.js engine with custom helpers; discuss the status of using Handlebars
-//const hbs = exphbs.create({ helpers });
+const hbs = exphbs.create({ helpers });
 
 // const sess = {
 //   secret: "Super secret secret",
