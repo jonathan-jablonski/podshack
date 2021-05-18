@@ -11,11 +11,25 @@
       <h1>
         &#127881 Pod Shack &#127881
       </h1>
+      <nav>
+        <a href="/">Homepage</a>
+        {{#if logged_in}}
+        <a href="/profile">profile</a> |
+        <button class="no-button" id="logout">logout</button>
+        {{else}}
+        <a href="/login">login</a>
+        {{/if}}
+      </nav>
     </header>
-      <main class="container container-fluid mt-5">
-        {{{ body }}}
-      </main>
+    <main class="container container-fluid mt-5">
+      {{{ body }}}
+    </main>
   </div>
-  </body>
+
+  {{#if logged_in}}
+  <script src="/js/logout.js"></script>
+  {{/if}}
+
+</body>
 
 </html>

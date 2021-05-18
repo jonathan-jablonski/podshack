@@ -11,13 +11,18 @@ User.init({
     },
     username: {
         type:DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
         unique: true,
     },
     password: {
         type:DataTypes.STRING,
         allowNull: false,
-  
+        validate: {
+            len: [8,20],
+            notContains: "password",
+            isLowercase: true,
+            isUppercase: true,
+        }
     },
     email: {
         type:DataTypes.STRING,
@@ -35,7 +40,13 @@ User.init({
   })
 
   module.exports = User
-
-
-
   
+    }
+})
+
+(async () => {
+    await sequelize.sync({ force: true });
+    // Code here
+  })();
+
+module.exports = User;
