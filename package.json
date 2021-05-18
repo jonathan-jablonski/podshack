@@ -34,7 +34,5 @@
     "passport-google-oauth20": "^2.0.0",
     "podcast-api": "^1.0.8",
     "sequelize": "^6.6.2"
-    "podcast-api": "^1.0.8",
-    "sequelize": "^6.3.5"
   }
 }
