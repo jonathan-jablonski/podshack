@@ -1,5 +1,6 @@
 const { Model, DataTypes} = require('sequelize')
 const bcrypt = require('bcrypt')
+const sequelize =require('../config/connection.js')
 
 class User extends Model {}
 
@@ -29,6 +30,17 @@ User.init({
         validate: {
             isEmail: true,
         }
+    },
+},
+    {
+    sequelize,
+        timestamps: false,
+        freezeTableName: true,
+        modelName: 'user',
+  })
+
+  module.exports = User
+  
     }
 })
 
