@@ -5,36 +5,36 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 //login for users already created locally
 router.post('/login', async (req, res) => {
-  try {
-    const correctEmail = await User.findOne({ where: { email: req.body.email } });
-
-    if (!correctEmail) {
-      res
-        .status(400)
-        .json({ message: 'Incorrect email' });
-      return;
+    try {
+      const correctEmail = await User.findOne({ where: { email: req.body.email } });
+  
+      if (!correctEmail) {
+        res
+          .status(400)
+          .json({ message: 'Incorrect email' });
+        return;
+      }
+  
+      const correctPassword = await userData.findOne({where: { password: req.body.password }});
+  
+      if (!correctPassword) {
+        res
+          .status(400)
+          .json({ message: 'Incorrect password' });
+        return;
+      }
+  
+      req.session.save(() => {
+        req.session.user_id = userData.id;
+        req.session.logged_in = true;
+        
+        res.json({ user: userData, message: 'Logging in...' });
+      });
+  
+    } catch (err) {
+      res.status(400).json(err);
     }
-
-    const correctPassword = await userData.findOne({ where: { password: req.body.password } });
-
-    if (!correctPassword) {
-      res
-        .status(400)
-        .json({ message: 'Incorrect password' });
-      return;
-    }
-
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.logged_in = true;
-
-      res.json({ user: userData, message: 'Logging in...' });
-    });
-
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
+  });
 
 // auth logout, close out sess, sends user back to homepage
 router.post('/logout', (req, res) => {
@@ -50,38 +50,36 @@ router.post('/logout', (req, res) => {
 
 // auth with google+
 router.get('/google', passport.authenticate('google', {
-  scope: ['profile', 'email', 'openid']
+    scope: ['profile', 'email', 'openid']
 }));
 
-router.get('/create', (req, res) => {
-  res.send(/*this is where the create route will go*/)
+router.get('/create', (req,res) => {
+    res.send(/*this is where the create route will go*/)
 });
 // callback route for google to redirect to
 // hand control to passport to use code to grab profile info
-router.get('/google/redirect', passport.authenticate('google', { failureRedirect: '/login' }),
-  (req, res) => {
+router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
     res.send('you reached the redirect URI');
-    res.redirect('/');
-  });
+});
 
 
 
 passport.use(
-  new GoogleStrategy({
-    // options for google strategy
-    clientID: "746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com",
-    clientSecret: "AJa2qzeHWvd68gTav5l4udT3",
-    callbackURL: 'http://localhost:3001/auth/google/redirect'
-  }, (accessToken, refreshToken, profile, done) => {
-    // passport callback function
-    console.log('profile', profile)
-    User.create({ email: profile.emails[0].value, name: profile.displayName, password: "Test1" }, function (err, user) {
-      console.log('user', user)
-      if (err) { return done(err); }
-      done(null, user);
-    });
-  },
-  ));
+    new GoogleStrategy({
+        // options for google strategy
+        clientID: "746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com",
+        clientSecret: "AJa2qzeHWvd68gTav5l4udT3",
+        callbackURL: 'http://localhost:3001/auth/google/redirect'
+    }, (accessToken, refreshToken, profile, done) => {
+        // passport callback function
+        console.log('profile', profile)
+        User.create({email:profile.emails[0].value, name:profile.displayName, password:"Test1" }, function(err, user) {
+        console.log('user', user )  
+          if (err) { return done(err); }
+          done(null, user);
+        });
+      },
+    ));
 
 
 module.exports = router;
