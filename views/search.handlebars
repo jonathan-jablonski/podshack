@@ -1,21 +1,22 @@
 <head>
   <meta charset="UTF-8">
   <title>Find Your New Favorite Podcast</title>
-  {{!-- <link rel="stylesheet" href="/css/style.css"> --}}
+  {{!--
+  <link rel="stylesheet" href="/css/style.css"> --}}
   {{!-- we can change title later just a placesaver for now --}}
 </head>
+
 <body>
   <div class="flex-column justify-space-around">
-<form>
-    <input type="text">
-    <button>Search</button>
-    <button>Shack Me</button>
-</form>
+    <form class="search-form">
+      <input class="form-input" id="search-input" type="text" placeholder="Search shack">
+      <button class="button" id="searchBtn">Search</button>
+      <button class="button" id="shackBtn">Shack Me</button>
+    </form>
   </div>
-<div>
-    {{!-- this is where search results will go--}}
-</div>
+  <div>
+  </div>
 
-<script>{{!-- this is where the front end script will go for the search--}}</script>
+  <script src="./js/search.js"></script>
 
 </body>
