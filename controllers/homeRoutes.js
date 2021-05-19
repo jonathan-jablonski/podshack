@@ -2,11 +2,15 @@ const router = require('express').Router();
 const { Client } = require('podcast-api');
 // const withAuth = require('../utils/auth')
 
+
 const client = Client({
   apiKey: process.env.API_KEY || null
 });
 
 router.get('/', (req, res) => {
+res.render('homepage')
+  
+router.get('/login', (req, res) => { 
   res.render('login');
 });
 
@@ -32,8 +36,7 @@ router.get('/results', (req, res) => {
         const podcasts = response.data.results.map(podcast => {
           return {
             title: podcast.title,
-            episodes: podcast.total_episodes,
-            description: podcast.description_original
+            description: podcast.description
           };
         });
         res.render('results', {
