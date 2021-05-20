@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
-const genreRoutes = require('./genreRoute');
+const profileRoutes = require('./profileRoute');
 
-router.use('/genres', genreRoutes);
+router.use('/profile', profileRoutes);
 
 module.exports = router;

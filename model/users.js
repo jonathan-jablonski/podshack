@@ -1,52 +1,49 @@
-const { Model, DataTypes} = require('sequelize')
-const bcrypt = require('bcrypt')
-const sequelize =require('../config/connection.js')
+const { Model, DataTypes } = require("sequelize");
+const bcrypt = require("bcrypt");
+const sequelize = require("../config/connection.js");
 
 class User extends Model {}
 
-User.init({
-    name:{
-        type:DataTypes.STRING,
-        allowNull: false,
+User.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     username: {
-        type:DataTypes.STRING,
-        allowNull: false,
-        unique: true,
+      type: DataTypes.STRING,
+      allowNull: true,
+      unique: true,
     },
     password: {
-        type:DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            len: [8,20],
-            notContains: "password",
-            isLowercase: true,
-            isUppercase: true,
-        }
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     email: {
-        type:DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            isEmail: true,
-        }
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isEmail: true,
+      },
     },
-},
-    {
+  },
+  {
     sequelize,
-        timestamps: false,
-        freezeTableName: true,
-        modelName: 'user',
-  })
+    timestamps: false,
+    freezeTableName: true,
+    modelName: "user",
+  }
+);
 
-  module.exports = User
-  
-    }
-})
-
-(async () => {
-    await sequelize.sync({ force: true });
-    // Code here
-  })();
+// (async () => {
+//     await sequelize.sync({ force: true });
+//     // Code here
+// })();
 
 module.exports = User;
