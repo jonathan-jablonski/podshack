@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const router = require('express').Router();
 const { Client } = require('podcast-api');
 const Podcast = require('../model/podcast');
@@ -21,34 +20,11 @@ router.get('/', (req, res) => {
 router.get('/search', (req, res) => {
   res.render('search',
     // { 
-=======
-const router = require("express").Router();
-const { Client } = require("podcast-api");
-// const withAuth = require('../utils/auth')
-
-const client = Client({
-  apiKey: process.env.API_KEY || null,
-});
-
-router.get("/", (req, res) => {
-  res.render("homepage");
-});
-
-router.get("/login", (req, res) => {
-  res.render("login");
-});
-
-router.get("/search", (req, res) => {
-  res.render(
-    "search"
-    // {
->>>>>>> main
     //   logged_in: req.session.logged_in
     //  }
   );
 });
 
-<<<<<<< HEAD
 
 router.get('/results/random', (req, res) => {
   try {
@@ -84,23 +60,9 @@ router.get('/results/:userinput', (req, res) => {
       language: 'English',
       safe_mode: 0,
     })
-=======
-router.get("/results", (req, res) => {
-  try {
-    client
-      .search({
-        q: "star wars",
-        type: "episode",
-        offset: 0,
-        only_in: "title,description,author",
-        language: "English",
-        safe_mode: 0,
-      })
->>>>>>> main
       .then((response) => {
         const podcasts = response.data.results.map((podcast) => {
           return {
-<<<<<<< HEAD
             link: podcast.link,
             thumbnail: podcast.thumbnail,
             title: podcast.title_original,
@@ -110,13 +72,6 @@ router.get("/results", (req, res) => {
         // console.log(podcasts)
         console.log(response.data);
         res.render('results', {
-=======
-            title: podcast.title,
-            description: podcast.description,
-          };
-        });
-        res.render("results", {
->>>>>>> main
           podcasts,
           // logged_in: req.session.logged_in
         });

@@ -53,8 +53,19 @@ router.get('/google', passport.authenticate('google', {
     scope: ['profile', 'email', 'openid']
 }));
 
-router.get('/create', (req,res) => {
-    res.send(/*this is where the create route will go*/)
+router.post('/create', async (req,res) => {
+  try {
+    const userData = await User.create(req.body);
+
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+
+      res.status(200).json(userData);
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 // callback route for google to redirect to
 // hand control to passport to use code to grab profile info
