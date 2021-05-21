@@ -1,30 +1,33 @@
-const router = require("express").Router();
-const { Client } = require("podcast-api");
-const Podcast = require("../model/podcast");
-// const withAuth = require('../utils/auth')
+const router = require('express').Router();
+const { Client } = require('podcast-api');
+const withAuth = require('../utils/auth')
 
 const client = Client({
   apiKey: process.env.LISTEN_API_KEY || null,
 });
 
 router.get("/", (req, res) => {
-  // if (req.session.logged_in) {
-  //   res.redirect('/search');
-  //   return;
-  // }
+  if (req.session.logged_in) {
+    res.redirect('/search');
+    return;
+  }
   res.render("login");
 });
 
-router.get("/search", (req, res) => {
-  res.render(
-    "search"
-    // {
-    //   logged_in: req.session.logged_in
-    //  }
+router.get('/login', (req,res) => {
+  res.render('login')
+});
+
+router.get("/search", withAuth, (req, res) => {
+  res.render("search",
+    {
+      logged_in: req.session.logged_in
+    }
   );
 });
 
-router.get("/results/random", (req, res) => {
+
+router.get('/results/random', withAuth, (req, res) => {
   try {
     client.justListen({}).then((response) => {
       console.log("this is data:", response.data);
@@ -39,7 +42,7 @@ router.get("/results/random", (req, res) => {
       console.log(podcasts);
       res.render("results", {
         podcasts,
-        // loggedIn: req.session.loggedIn
+        logged_in: req.session.logged_in
       });
     });
   } catch (err) {
@@ -47,17 +50,16 @@ router.get("/results/random", (req, res) => {
   }
 });
 
-router.get("/results/:userinput", (req, res) => {
+router.get('/results/:userinput', (req, res) => {
   try {
-    client
-      .search({
-        q: req.params.userinput,
-        type: "episode",
-        offset: 0,
-        only_in: "title,description,author",
-        language: "English",
-        safe_mode: 0,
-      })
+    client.search({
+      q: req.params.userinput,
+      type: 'episode',
+      offset: 0,
+      only_in: 'title,description,author',
+      language: 'English',
+      safe_mode: 0,
+    })
       .then((response) => {
         const podcasts = response.data.results.map((podcast) => {
           return {
@@ -69,7 +71,7 @@ router.get("/results/:userinput", (req, res) => {
         });
         // console.log(podcasts)
         console.log(response.data);
-        res.render("results", {
+        res.render('results', {
           podcasts,
           // logged_in: req.session.logged_in
         });
@@ -79,36 +81,37 @@ router.get("/results/:userinput", (req, res) => {
   }
 });
 
-router.get("/profile/playlist", (req, res) => {
-  try {
-    client.fetchMyPlaylists({}).then((response) => {
-      console.log(response.data);
-      res.render("profile", {
-        // loggedIn: req.session.loggedIn
-      });
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 
-router.get("/profile", async (req, res) => {
-  try {
-    // Find the logged in user based on the session ID
-    const userData = await User.findByPk(req.session.name, {
-      attributes: { exclude: ["password"] },
-      include: [{ model: Podcast }],
-    });
+// Future developments
+// router.get("/profile/playlist", (req, res) => {
+//   try {
+//     client.fetchMyPlaylists({}).then((response) => {
+//       console.log(response.data);
+//       res.render("profile", {
+//         // loggedIn: req.session.loggedIn
+//       });
+//     });
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
-    const user = userData.get({ plain: true });
+// router.get("/profile", async (req, res) => {
+//   try {
+//     const userData = await User.findByPk(req.session.name, {
+//       attributes: { exclude: ["password"] },
+//       include: [{ model: Podcast }],
+//     });
 
-    res.render("profile", {
-      ...user,
-      logged_in: true,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+//     const user = userData.get({ plain: true });
+
+//     res.render("profile", {
+//       ...user,
+//       logged_in: true,
+//     });
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 module.exports = router;
