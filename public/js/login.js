@@ -19,29 +19,6 @@ const loginFormHandler = async (event) => {
     } else {
       alert(response.statusText);
     }
-<<<<<<< HEAD
-  };
-  
-  const signupFormHandler = async (event) => {
-    event.preventDefault();
-  
-    const name = document.querySelector('#name-signup').value.trim();
-    const email = document.querySelector('#email-signup').value.trim();
-    const password = document.querySelector('#password-signup').value.trim();
-  
-    if (name && email && password) {
-      const response = await fetch('/auth/create', {
-        method: 'POST',
-        body: JSON.stringify({ name, email, password }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-  
-      if (response.ok) {
-        document.location.replace('/search');
-      } else {
-        alert(response.statusText);
-      }
-=======
   }
 };
 
@@ -63,7 +40,6 @@ const signupFormHandler = async (event) => {
       document.location.replace("/search");
     } else {
       alert(response.statusText);
->>>>>>> main
     }
   }
 };
