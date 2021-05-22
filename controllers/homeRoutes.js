@@ -1,23 +1,19 @@
 const router = require('express').Router();
 const { Client } = require('podcast-api');
 const withAuth = require('../utils/auth')
-
 const client = Client({
-  apiKey: process.env.LISTEN_API_KEY || null,
+  apiKey:"ba5c932e2eab40368bbb09df67d60943",
 });
-
 router.get("/", (req, res) => {
   if (req.session.logged_in) {
     res.redirect('/search');
     return;
   }
-  res.render("login");
+  res.render("homepage");
 });
-
-router.get('/login', (req,res) => {
-  res.render('login')
+router.get("/login", (req,res) => {
+  res.render("login")
 });
-
 router.get("/search", withAuth, (req, res) => {
   res.render("search",
     {
@@ -25,8 +21,13 @@ router.get("/search", withAuth, (req, res) => {
     }
   );
 });
-
-
+router.get("/signup", async (req, res) => {
+  try {
+    res.render("signup")
+  } catch(err) {
+    res.status(500).json(err);
+  }
+});
 router.get('/results/random', withAuth, (req, res) => {
   try {
     client.justListen({}).then((response) => {
@@ -49,7 +50,6 @@ router.get('/results/random', withAuth, (req, res) => {
     res.status(500).json(err);
   }
 });
-
 router.get('/results/:userinput', (req, res) => {
   try {
     client.search({
@@ -80,8 +80,6 @@ router.get('/results/:userinput', (req, res) => {
     res.status(500).json(err);
   }
 });
-
-
 // Future developments
 // router.get("/profile/playlist", (req, res) => {
 //   try {
@@ -95,16 +93,13 @@ router.get('/results/:userinput', (req, res) => {
 //     res.status(500).json(err);
 //   }
 // });
-
 // router.get("/profile", async (req, res) => {
 //   try {
 //     const userData = await User.findByPk(req.session.name, {
 //       attributes: { exclude: ["password"] },
 //       include: [{ model: Podcast }],
 //     });
-
 //     const user = userData.get({ plain: true });
-
 //     res.render("profile", {
 //       ...user,
 //       logged_in: true,
@@ -113,5 +108,4 @@ router.get('/results/:userinput', (req, res) => {
 //     res.status(500).json(err);
 //   }
 // });
-
 module.exports = router;

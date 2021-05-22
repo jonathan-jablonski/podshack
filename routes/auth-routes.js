@@ -94,9 +94,8 @@ passport.use(
   new GoogleStrategy(
     {
       // options for google strategy
-      clientID:
-        "746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com",
-      clientSecret: "AJa2qzeHWvd68gTav5l4udT3",
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "http://localhost:3001/auth/google/redirect",
     },
     (accessToken, refreshToken, profile, done) => {
@@ -119,5 +118,6 @@ passport.use(
     }
   )
 );
+module.exports = router;
 
 module.exports = router;
