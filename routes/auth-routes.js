@@ -90,7 +90,7 @@ router.get(
       req.session.name = req.user.name;
       req.session.email = req.user.email;
       req.session.logged_in = true;
-      res.redirect('/search');
+      res.redirect("/search");
     });
   }
 );
@@ -101,21 +101,21 @@ passport.use(
       // options for google strategy
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://podshack.herokuapp.com/auth/google/redirect",
+      callbackURL: "http://localhost:3001/auth/google/redirect",
     },
     (accessToken, refreshToken, profile, done) => {
       // passport callback function
       console.log("profile", profile);
-      User.create(
-        {
-          email: profile.emails[0].value,
-          name: profile.displayName,
-          password: "Test1",
-        }
-      ).then((res) => {
+      User.create({
+        email: profile.emails[0].value,
+        name: profile.displayName,
+        password: "Test1",
+      }).then((res) => {
+        console.log(res);
         done(null, res);
-      })
+      });
     }
   )
 );
+
 module.exports = router;

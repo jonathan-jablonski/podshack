@@ -1,5 +1,5 @@
 <html lang="en">
-
+{{!-- public\css\main.css --}}
 <head>
   <title>PodShack</title>
   <meta charset="utf-8">
@@ -9,7 +9,7 @@
   <link rel="icon" href="media/favicon.png">
   <link rel="mask-icon" href="media/favicon.svg" color="rgb(36,38,58)">
   <link rel="shortcut icon" href="media/favicon.png">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="/css/main.css" type="text/css">
 </head>
 
 <header class="header-main dark">
@@ -21,7 +21,12 @@
     <div class="nav-toggle"></div>
     <ul class="inline">
 </header>
+
 <nav>
+{{#if logged_in}}
+<button class="no-button" id="logout">logout</button>
+
+{{else}}
   <ul class="inline right">
     <li><a href="login" class="button button-secondary button-m full-width-tablet" role="button">Log In</a></li>
     <li><a href="signup" class="button button-secondary button-m full-width-tablet" role="button">Sign Up</a>
@@ -29,14 +34,10 @@
     <li><a href="auth/google" class="button button-secondary button-m full-width-tablet" role="button">Google LogIn</a></li>
   </ul>
   </ul>
-</nav>
 
-{{#if logged_in}}
-<button class="no-button" id="logout">logout</button>
-
-{{else}}
 
 {{/if}}
+</nav>
 {{#if signup-form}}
 
 {{else}}
