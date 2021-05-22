@@ -85,8 +85,13 @@ router.get(
   "/google/redirect",
   passport.authenticate("google", { failureRedirect: "/login" }),
   (req, res) => {
-    res.send("you reached the redirect URI");
-    res.redirect("/");
+    req.session.save(() => {
+      req.session.password = req.user.id;
+      req.session.name = req.user.name;
+      req.session.email = req.user.email;
+      req.session.logged_in = true;
+      res.redirect('/search');
+    });
   }
 );
 
@@ -106,18 +111,11 @@ passport.use(
           email: profile.emails[0].value,
           name: profile.displayName,
           password: "Test1",
-        },
-        function (err, user) {
-          console.log("user", user);
-          if (err) {
-            return done(err);
-          }
-          done(null, user);
         }
-      );
+      ).then((res) => {
+        done(null, res);
+      })
     }
   )
 );
-module.exports = router;
-
 module.exports = router;

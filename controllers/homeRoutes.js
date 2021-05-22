@@ -34,10 +34,10 @@ router.get('/results/random', withAuth, (req, res) => {
       console.log("this is data:", response.data);
       const podcasts = [
         {
-          link: response?.data?.link,
-          thumbnail: response?.data?.thumbnail,
-          title: response?.data?.title,
-          description: response?.data?.description,
+          link: response.data.link,
+          thumbnail: response.data.thumbnail,
+          title: response.data.title,
+          description: response.data.description,
         },
       ];
       console.log(podcasts);
