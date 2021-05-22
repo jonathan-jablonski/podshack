@@ -101,7 +101,7 @@ passport.use(
       // options for google strategy
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3001/auth/google/redirect",
+      callbackURL: "https://podshack.herokuapp.com/auth/google/redirect",
     },
     (accessToken, refreshToken, profile, done) => {
       // passport callback function
