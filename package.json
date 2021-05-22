@@ -10,18 +10,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jonathan-jablonski/podshack.git"
+    "url": "git+https://github.com/mirrorlessmind/podshack2.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jonathan-jablonski/podshack/issues"
+    "url": "https://github.com/mirrorlessmind/podshack2/issues"
   },
-  "homepage": "https://github.com/jonathan-jablonski/podshack#readme",
+  "homepage": "https://github.com/mirrorlessmind/podshack#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "connect-session-sequelize": "^7.0.4",
-    "dotenv": "^8.6.0",
+    "dotenv": "^8.2.0",
     "exphbs": "^1.2.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
